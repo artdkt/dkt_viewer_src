@@ -72,23 +72,13 @@ class ofApp : public ofBaseApp{
     ofxIntSlider magnification;
     ofxFloatSlider pos_x;
     ofxFloatSlider pos_y;
-    
-    
+  
     ofxPanel gui;
-    
-    //-- bool zoom
-    
-    bool        zoomTest;
-
-    
-    
-    
-    //-- fullscreen
-    
-    bool  	bFullscreen;
+  
+    bool        zoomTest;     //-- bool zoom
+    bool  	bFullscreen;     //-- fullscreen
     
     //-- string
-    
     string str;
     string timecode;
     string temp;

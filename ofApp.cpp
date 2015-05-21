@@ -1,7 +1,7 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
     
     ofBackground(20, 20, 20);
     zoomTest = false;
@@ -60,25 +60,23 @@ void ofApp::setup(){
     gui.add(zoom01.setup("zoom01", false));
     gui.add(zoom02.setup("zoom02", false));
     gui.add(zoom03.setup("zoom03", false));
-    
-    
+  
     gui.add(magnification.setup("magnification", 1, 1, 12));
     
     bHide = false;
-    
-    
+  
     // -- fullscreen
     
     bFullscreen = true;
     ofSetFullscreen(bFullscreen);
     ofShowCursor();
-    
-    
+  
     temp = "---";
+  
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update() {
     
     ofShowCursor();
     
@@ -86,8 +84,7 @@ void ofApp::update(){
     mov01.update();
     mov02.update();
     mov03.update();
-    
-    
+  
     //--------------------------
     //---- outputString
     
@@ -108,8 +105,7 @@ void ofApp::update(){
     str +=  "macfps"    + ofToString(ofGetFrameRate(), 2)+"fps" + "\n";
     str +=  "mov_pos_x: "    + ofToString(mov_pos.x)+ "  mov_pos_y: " + ofToString(mov_pos.y)+ "\n";
     str +=  "temp" + temp +  "\n";
-    
-    
+  
     //--------------------------
     //--- soundControl
     
@@ -141,68 +137,39 @@ void ofApp::update(){
     //--- Check zoom
     
     if(zoom00) {
-        
         zoom01 = false;
         zoom02 = false;
         zoom03 = false;
-        
-    } else if(zoom01){
-        
+    } else if(zoom01) {
         zoom00 = false;
         zoom02 = false;
         zoom03 = false;
-        
-    } else if(zoom02){
-        
+    } else if(zoom02) {
         zoom00 = false;
         zoom01 = false;
         zoom03 = false;
-        
-    } else if(zoom03){
-        
+    } else if(zoom03) {
         zoom00 = false;
         zoom01 = false;
         zoom02 = false;
     }
-    
-    if(zoom00 || zoom01 || zoom02 || zoom03){
+    if(zoom00 || zoom01 || zoom02 || zoom03) {
         zoomTest = true;
     } else {
         zoomTest = false;
         magnification = 1;
     }
-    
-//    //--------------------------
-//    //-- limit position of dragged movie
-//    
-//    if (mov_pos.x > 0) {
-//        mov_pos.x = 0;
-//    }
-//    else if(mov_pos.x < stageWidth - stageWidth*magnification){
-//        mov_pos.x = stageWidth - stageWidth*magnification;
-//    }
-//    
-//    if (mov_pos.y < 0) {
-//        mov_pos.y = 0;
-//    }
-//    else if (mov_pos.y < stageHeight*magnification - stageHeight){
-//        mov_pos.y = stageHeight*magnification - stageHeight;
-//    }
-    
-    
-    
+  
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
+  
     ofSetHexColor(0xFFFFFF);
-    
-    
+  
     // ---------
     
     if(zoom00){
-        
         maskFbo.begin();
         mov00.draw(0, 0, 640, 360);
         mov01.draw(640,0, 640, 360);
@@ -211,10 +178,7 @@ void ofApp::draw(){
         ofClear(0, 0, 0, 255);
         mov00.draw(mov_pos.x, mov_pos.y, 1280*magnification, 720*magnification);
         maskFbo.end();
-        
-        
-    } else if(zoom01){
-        
+    } else if(zoom01) {
         maskFbo.begin();
         mov00.draw(0, 0, 640, 360);
         mov02.draw(0, 360, 640, 360);
@@ -222,9 +186,7 @@ void ofApp::draw(){
         ofClear(0, 0, 0, 255);
         mov01.draw(mov_pos.x, mov_pos.y, 1280*magnification, 720*magnification);
         maskFbo.end();
-        
     } else if(zoom02) {
-        
         maskFbo.begin();
         mov00.draw(0, 0, 640, 360);
         mov01.draw(640,0, 640, 360);
@@ -232,9 +194,7 @@ void ofApp::draw(){
         ofClear(0, 0, 0, 255);
         mov02.draw(mov_pos.x, mov_pos.y, 1280*magnification, 720*magnification);
         maskFbo.end();
-        
     } else if(zoom03) {
-        
         maskFbo.begin();
         mov00.draw(0, 0, 640, 360);
         mov01.draw(640,0, 640, 360);
@@ -242,9 +202,7 @@ void ofApp::draw(){
         ofClear(0, 0, 0, 255);
         mov03.draw(mov_pos.x, mov_pos.y, 1280*magnification, 720*magnification);
         maskFbo.end();
-        
     } else {
-        
         mov_pos = ofPoint(0, 0);
         temp_mov_pos = ofPoint(0, 0);
         
@@ -255,43 +213,27 @@ void ofApp::draw(){
         mov03.draw(640, 360, 640, 360);
         maskFbo.end();
     }
-    
+
     maskFbo.draw(ofGetWidth()/2-stageWidth/2,ofGetHeight()/2-stageHeight/2,stageWidth,stageHeight);
-    
     
     //--------------------------
     //---- information
-    
-    
+  
     ofSetHexColor(0xFFFFFF);
     ofDrawBitmapString(str, 10, 20);
     ofDrawBitmapString(eventString, 20,80);
-    
-    //---
-    
-    //    if (mov00.getCurrentFrame() != mov01.getCurrentFrame()) {
-    //        float hoge = mov00.getCurrentFrame() - mov01.getCurrentFrame();
-    //        cout << "lag_" + ofToString(hoge) + "\n"  ;
-    //    } else {
-    //        cout << "ok\n";
-    //    }
-    
-    //--------------------------
-    //--
-    
+  
     allMoviePlay(play);
-    
-    
+  
     //--------------------------
     //-- GUI
-    
+  
     if( bHide ){
         gui.draw();
     }
-    
+  
     //--------------------------
     //--- stageFrame
-    
     
     ofNoFill();
     ofSetLineWidth(1.0);
@@ -299,7 +241,6 @@ void ofApp::draw(){
     ofSetLineWidth(0.5);
     ofLine(ofGetWidth()/2, ofGetHeight()/2 - stageHeight/2, ofGetWidth()/2, ofGetHeight()/2 + stageHeight/2);
     ofLine(ofGetWidth()/2 -stageWidth/2, ofGetHeight()/2, ofGetWidth()/2 + stageWidth/2, ofGetHeight()/2);
-    
     
     //--------------------------
     //---- SeekBar
@@ -317,13 +258,12 @@ void ofApp::draw(){
     ofDrawBitmapString(timecode, stageWidth * ((float)mov00.getCurrentFrame() / (float)mov00.getTotalNumFrames()), 40);
     
     ofPopMatrix();
-    
+  
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
-    
+  
     if( key == 'h' ){
         bHide = !bHide;
     }
@@ -332,13 +272,11 @@ void ofApp::keyPressed(int key){
         play = !play;
     }
     
-    //--
-    
     if(key == 'f') {
         bFullscreen = !bFullscreen;
         ofSetFullscreen(bFullscreen);
     }
-    
+  
 }
 
 //--------------------------------------------------------------
@@ -348,7 +286,7 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::allMoviePlay(bool _bool){
-    
+  
     if (!_bool) {
         mov00.stop();
         mov01.stop();
@@ -360,13 +298,13 @@ void ofApp::allMoviePlay(bool _bool){
         mov02.play();
         mov03.play();
     }
-    
+  
 }
 
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-    
+  
     if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
         if (y > ofGetHeight()/2 + stageHeight/2 +40 && y < ofGetHeight()/2 + stageHeight/2 +40 +20) {
             ofBackground(0, 0, 0);
@@ -376,12 +314,12 @@ void ofApp::mouseMoved(int x, int y ){
     } else {
         ofBackground(20, 20, 20);
     }
-    
+  
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    
+  
     //--------------------------
     // seek
     
@@ -414,17 +352,12 @@ void ofApp::mouseDragged(int x, int y, int button){
         
         mov_pos = transfer;
     }
-    
-
-    
-
-
+  
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    
-    
+  
     // seek
     
     if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
@@ -440,7 +373,6 @@ void ofApp::mousePressed(int x, int y, int button){
             
         }
     }
-    
     
     // --- drag
     
@@ -458,29 +390,25 @@ void ofApp::mousePressed(int x, int y, int button){
             }
         }
     }
-    
+  
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    
-    
+  
     //-- seek
-    
     if(seek){
         play = true;
         seek = !seek;
     }
-    
-    
+
     //-- drag
-    
     if(dragMov){
         
         temp_mov_pos = mov_pos;
         dragMov = !dragMov;
     }
-    
+  
 }
 
 //--------------------------------------------------------------
