@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofQTKitPlayer.h"
 #include "ofxGui.h"
+#include "area.h"
 
 class ofApp : public ofBaseApp{
 
@@ -22,6 +23,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
   
     void allMoviePlay(bool _bool);
+    void updateZoomedFlag();
   
     ofQTKitPlayer   mov00;
     ofQTKitPlayer   mov01;
@@ -44,10 +46,10 @@ class ofApp : public ofBaseApp{
     
     bool dragMov;
     
-    ofPoint beginDrag;      // ドラッグを始めた最初の位置
-    ofPoint transfer;       // 変化量
-    ofPoint mov_pos;        // 映像の位置
-    ofPoint temp_mov_pos;   // 映像の座標を一時的に保管
+    ofPoint beginDrag;      //
+    ofPoint transfer;       //
+    ofPoint mov_pos;        //
+    ofPoint temp_mov_pos;   //
     
     //----gui
     
@@ -66,7 +68,8 @@ class ofApp : public ofBaseApp{
     ofxToggle   zoom01;
     ofxToggle   zoom02;
     ofxToggle   zoom03;
-    
+    vector <ofxToggle> zoom[4];
+
     ofxIntSlider magnification;
     ofxFloatSlider pos_x;
     ofxFloatSlider pos_y;
@@ -75,10 +78,20 @@ class ofApp : public ofBaseApp{
   
     bool        zoomTest;     //-- bool zoom
     bool  	bFullscreen;     //-- fullscreen
-    
+
+    clock_t startTime, endTime;
+    bool singleClicked;
+    bool checkingdoubleClicked();
+  
     //-- string
     string str;
     string timecode;
     string temp;
     
 };
+
+
+
+
+
+

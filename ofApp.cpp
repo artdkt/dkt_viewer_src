@@ -72,6 +72,7 @@ void ofApp::setup() {
     ofShowCursor();
   
     temp = "---";
+    singleClicked = false;
   
 }
 
@@ -134,8 +135,8 @@ void ofApp::update() {
     }
     
     //--------------------------
-    //--- Check zoom
-    
+
+  
     if(zoom00) {
         zoom01 = false;
         zoom02 = false;
@@ -162,8 +163,9 @@ void ofApp::update() {
   
 }
 
+
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
   
     ofSetHexColor(0xFFFFFF);
   
@@ -358,24 +360,30 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
   
+    // supporting zoom to double click
+    if(zoomTest && checkingdoubleClicked()) {
+      cout << "x=" << x << ", y=" <<  y << endl;
+      magnification =  magnification + 1;
+      mov01.draw(x, y, 1280*magnification, 720*magnification); // kokoga umaku ittenai
+    }
+  
+  
     // seek
-    
     if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
-        if (y > ofGetHeight()/2 + stageHeight/2 +40 && y < ofGetHeight()/2 + stageHeight/2 +40 +20) {
-            play = false;
-            seek = true;
-            float x_pos = x - (ofGetWidth()/2-stageWidth/2);
-            float hoge  = x_pos / stageWidth;
-            mov00.setPosition(hoge);
-            mov01.setPosition(hoge);
-            mov02.setPosition(hoge);
-            mov03.setPosition(hoge);
-            
-        }
+      if (y > ofGetHeight()/2 + stageHeight/2 +40 && y < ofGetHeight()/2 + stageHeight/2 +40 +20) {
+        play = false;
+        seek = true;
+        float x_pos = x - (ofGetWidth()/2-stageWidth/2);
+        float hoge  = x_pos / stageWidth;
+        mov00.setPosition(hoge);
+        mov01.setPosition(hoge);
+        mov02.setPosition(hoge);
+        mov03.setPosition(hoge);
+        
+      }
     }
     
     // --- drag
-    
     if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
         if (y > ofGetHeight()/2 - stageHeight/2 && ofGetHeight()/2 + stageHeight/2) {
             
@@ -425,3 +433,30 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }
+
+
+/* ---------------- asset function --------------------*/
+
+bool ofApp::checkingdoubleClicked() {
+  
+  if (singleClicked == false) {
+    startTime = clock();
+    singleClicked = true;
+    return false;
+  } else {
+    endTime = clock();
+    double diffTIme = (double)(endTime - startTime) / CLOCKS_PER_SEC * 1000;
+    if (diffTIme < 1000) { // put detection time to double click.
+      singleClicked = false;
+      return true;
+    } else {
+      startTime = clock();
+      return false;
+    }
+  }
+
+}
+
+
+
+
