@@ -17,8 +17,11 @@ public:
   ofPoint leftTop, rightBottom;
   ofxToggle soundToggle, zoomToggle;
 
-  
   void setDivision(ofPoint _leftTop, ofPoint _rightBottom);
+  ofEvent<ofxToggle> toggleZoom;
+  ofEvent<ofxToggle> toggleSound;
+  void emitEvent();
+
 
   /*--- constractor ---*/
   Section(string movName, ofPoint _leftTop, ofPoint _rightBottom) {
@@ -26,4 +29,5 @@ public:
     ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
     setDivision(_leftTop, _rightBottom);
   }
+  
 };

@@ -16,8 +16,8 @@ class Container {
 
 public:
   ofxIntSlider magnification;
-  bool        zoomTest;     //-- bool zoom
-  bool  	bFullscreen;     //-- fullscreen
+  bool zoomTest;     //-- bool zoom
+  bool bFullscreen;     //-- fullscreen
   
   int hasOwnSoundFlag();
   int hasOwnZoomFlag();

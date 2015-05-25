@@ -2,6 +2,13 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
+  
+    /*--- init other classes ---*/
+    my_section1 = new Section("movies/gpA.mov", ofPoint(0,0), ofPoint(640,360));
+  
+    /*--- add something to click event ---*/
+     ofAddListener(my_section1->toggleZoom, this, &ofApp::listenToggle);
+
     
     ofBackground(20, 20, 20);
     zoomTest = false;
@@ -61,6 +68,7 @@ void ofApp::setup() {
     gui.add(zoom01.setup("zoom01", false));
     gui.add(zoom02.setup("zoom02", false));
     gui.add(zoom03.setup("zoom03", false));
+    gui.add(my_section1->zoomToggle.setup("my_section", false));
   
     gui.add(magnification.setup("magnification", 1, 1, 12));
     
@@ -162,6 +170,9 @@ void ofApp::update() {
         magnification = 1;
     }
   
+    /*--- testing sections event ---*/
+    my_section1->emitEvent();
+  cout << my_section1->zoomToggle << endl;
 }
 
 
@@ -455,8 +466,15 @@ bool ofApp::checkingdoubleClicked() {
       return false;
     }
   }
-
 }
+
+/*--- callback function listener ---*/
+void ofApp::listenToggle(ofxToggle &val){
+    /* TODO: set flag of property Containers owns */
+//    cout << val << endl;
+};
+
+
 
 
 

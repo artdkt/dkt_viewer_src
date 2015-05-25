@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofQTKitPlayer.h"
 #include "ofxGui.h"
-//#include "section.h"
+#include "section.h"
 
 class ofApp : public ofBaseApp{
 
@@ -86,7 +86,11 @@ class ofApp : public ofBaseApp{
     string str;
     string timecode;
     string temp;
-    
+  
+    /*--- testing section class ---*/
+    Section *my_section1;
+    void listenToggle(ofxToggle &val);
+  
 };
 
 
