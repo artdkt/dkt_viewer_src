@@ -7,3 +7,8 @@
 //
 
 #include "section.h"
+
+void Section::setDivision(ofPoint _leftTop, ofPoint _rightBottom) {
+  leftTop = _leftTop;
+  rightBottom = _rightBottom;
+};

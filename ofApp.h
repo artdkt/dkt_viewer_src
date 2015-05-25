@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofQTKitPlayer.h"
 #include "ofxGui.h"
-#include "area.h"
+//#include "section.h"
 
 class ofApp : public ofBaseApp{
 
@@ -23,7 +23,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
   
     void allMoviePlay(bool _bool);
-    void updateZoomedFlag();
+
   
     ofQTKitPlayer   mov00;
     ofQTKitPlayer   mov01;
@@ -68,7 +68,6 @@ class ofApp : public ofBaseApp{
     ofxToggle   zoom01;
     ofxToggle   zoom02;
     ofxToggle   zoom03;
-    vector <ofxToggle> zoom[4];
 
     ofxIntSlider magnification;
     ofxFloatSlider pos_x;

@@ -12,6 +12,7 @@ void ofApp::setup() {
     
     beginDrag, transfer, mov_pos, temp_mov_pos = ofPoint(0, 0);
     dragMov = false;
+
     
     //ofEnableAlphaBlending();
     
