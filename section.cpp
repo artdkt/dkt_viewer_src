@@ -15,6 +15,6 @@ void Section::setDivision(ofPoint _leftTop, ofPoint _rightBottom) {
 
 void Section::emitEvent(){
   if (zoomToggle) {
-    ofNotifyEvent(toggleZoom, zoomToggle); // CHECK: counld changes the statement of zoomToggle.
+    ofNotifyEvent(toggleZoom, sectionNumber); // CHECK: counld changes the statement of zoomToggle.
   }
 }

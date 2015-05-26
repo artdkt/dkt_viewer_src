@@ -89,7 +89,7 @@ class ofApp : public ofBaseApp{
   
     /*--- testing section class ---*/
     Section *my_section1;
-    void listenToggle(ofxToggle &val);
+    void listenZoom(int &val);
   
 };
 

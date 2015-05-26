@@ -4,10 +4,10 @@
 void ofApp::setup() {
   
     /*--- init other classes ---*/
-    my_section1 = new Section("movies/gpA.mov", ofPoint(0,0), ofPoint(640,360));
+    my_section1 = new Section("movies/gpA.mov", ofPoint(0,0), ofPoint(640,360), 0);
   
     /*--- add something to click event ---*/
-     ofAddListener(my_section1->toggleZoom, this, &ofApp::listenToggle);
+     ofAddListener(my_section1->toggleZoom, this, &ofApp::listenZoom);
 
     
     ofBackground(20, 20, 20);
@@ -172,7 +172,6 @@ void ofApp::update() {
   
     /*--- testing sections event ---*/
     my_section1->emitEvent();
-  cout << my_section1->zoomToggle << endl;
 }
 
 
@@ -450,7 +449,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 /* ---------------- asset function --------------------*/
 
 bool ofApp::checkingdoubleClicked() {
-  
   if (singleClicked == false) {
     startTime = clock();
     singleClicked = true;
@@ -469,9 +467,9 @@ bool ofApp::checkingdoubleClicked() {
 }
 
 /*--- callback function listener ---*/
-void ofApp::listenToggle(ofxToggle &val){
+void ofApp::listenZoom(int &sectionNumber){
     /* TODO: set flag of property Containers owns */
-//    cout << val << endl;
+    cout << sectionNumber << endl;
 };
 
 
