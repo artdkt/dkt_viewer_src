@@ -15,14 +15,11 @@ public:
   ofQTKitPlayer mov;
   ofPoint mov_pos, temp_mov_pos;
   ofPoint leftTop, rightBottom;
-  ofxToggle soundToggle, zoomToggle;
+  ofxToggle zoomToggle;
   int sectionNumber;
 
   void setDivision(ofPoint _leftTop, ofPoint _rightBottom);
-  void emitEvent();
   
-  ofEvent<int> toggleZoom;
-  ofEvent<ofxToggle> toggleSound;
 
 
   /*--- constractor ---*/

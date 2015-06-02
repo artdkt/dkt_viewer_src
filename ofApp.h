@@ -5,6 +5,10 @@
 #include "ofxGui.h"
 #include "section.h"
 
+#define ELEM(array) (sizeof (array) / sizeof *(array))
+
+
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -88,8 +92,15 @@ class ofApp : public ofBaseApp{
     string temp;
   
     /*--- testing section class ---*/
-    Section *my_section1;
-    void listenZoom(int &val);
+    Section *section_1;
+    void onZoomChanged_1(bool &state);
+
+    void manipulateZooms(int sectionNum);
+    void ForceFalsedZoomFlags(int sectionNum);
+    void convertDisplaysZooming();
+  
+    /*--- testing component variables ---*/
+    ofxToggle *zoomFlags[4];
   
 };
 

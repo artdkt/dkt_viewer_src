@@ -4,12 +4,14 @@
 void ofApp::setup() {
   
     /*--- init other classes ---*/
-    my_section1 = new Section("movies/gpA.mov", ofPoint(0,0), ofPoint(640,360), 0);
+    section_1 = new Section("movies/gpA.mov", ofPoint(0,0), ofPoint(640,360), 0);
+  
+    zoomFlags[0] = &section_1->zoomToggle;
   
     /*--- add something to click event ---*/
-     ofAddListener(my_section1->toggleZoom, this, &ofApp::listenZoom);
+    section_1->zoomToggle.addListener(this, &ofApp::onZoomChanged_1);
 
-    
+  
     ofBackground(20, 20, 20);
     zoomTest = false;
     
@@ -68,7 +70,7 @@ void ofApp::setup() {
     gui.add(zoom01.setup("zoom01", false));
     gui.add(zoom02.setup("zoom02", false));
     gui.add(zoom03.setup("zoom03", false));
-    gui.add(my_section1->zoomToggle.setup("my_section", false));
+    gui.add(section_1->zoomToggle.setup("my_section", false));
   
     gui.add(magnification.setup("magnification", 1, 1, 12));
     
@@ -169,9 +171,6 @@ void ofApp::update() {
         zoomTest = false;
         magnification = 1;
     }
-  
-    /*--- testing sections event ---*/
-    my_section1->emitEvent();
 }
 
 
@@ -370,7 +369,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-  
     // supporting zoom to double click
     if(zoomTest && checkingdoubleClicked()) {
       cout << "x=" << x << ", y=" <<  y << endl;
@@ -446,6 +444,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 
+
 /* ---------------- asset function --------------------*/
 
 bool ofApp::checkingdoubleClicked() {
@@ -466,11 +465,32 @@ bool ofApp::checkingdoubleClicked() {
   }
 }
 
-/*--- callback function listener ---*/
-void ofApp::listenZoom(int &sectionNumber){
-    /* TODO: set flag of property Containers owns */
-    cout << sectionNumber << endl;
+void ofApp::manipulateZooms(int sectionNum) {
+  ForceFalsedZoomFlags(sectionNum);
+  convertDisplaysZooming();
+}
+
+void ofApp::ForceFalsedZoomFlags(int sectionNum) {
+  for (int i = 0; i < ELEM(*zoomFlags); i ++) {
+    if (i != sectionNum) {
+      *zoomFlags[i] = false;
+    }
+  }
 };
+
+void ofApp::convertDisplaysZooming() {
+  /* TODO: fire converting process. */
+  
+//  cout << section_1->zoomToggle << endl;
+};
+
+/* ---------------- events function --------------------*/
+void ofApp::onZoomChanged_1(bool &state) {
+  
+  manipulateZooms(section_1->sectionNumber);
+  /* TODO: set flag of property Containers owns */
+};
+
 
 
 
