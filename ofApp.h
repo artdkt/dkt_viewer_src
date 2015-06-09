@@ -28,18 +28,11 @@ class ofApp : public ofBaseApp{
   
     void allMoviePlay(bool _bool);
 
-  
-    ofQTKitPlayer   mov00;
-    ofQTKitPlayer   mov01;
-    ofQTKitPlayer   mov02;
-    ofQTKitPlayer   mov03;
+    bool frameByframe;
+    ofFbo maskFbo;
     
-    bool            frameByframe;
-    
-    ofFbo           maskFbo;
-    
-    int             stageWidth;
-    int             stageHeight;
+    int stageWidth;
+    int stageHeight;
     
     //----event
     
@@ -60,18 +53,7 @@ class ofApp : public ofBaseApp{
     bool bHide;
     
     ofxToggle   play;
-    
-    ofxLabel    soundLabel;
-    ofxToggle   movie00;
-    ofxToggle   movie01;
-    ofxToggle   movie02;
-    ofxToggle   movie03;
-    
     ofxLabel    zoomLabel;
-    ofxToggle   zoom00;
-    ofxToggle   zoom01;
-    ofxToggle   zoom02;
-    ofxToggle   zoom03;
 
     ofxIntSlider magnification;
     ofxFloatSlider pos_x;
@@ -79,7 +61,7 @@ class ofApp : public ofBaseApp{
   
     ofxPanel gui;
   
-    bool        zoomTest;     //-- bool zoom
+    bool        zoomOn;     //-- bool zoom
     bool  	bFullscreen;     //-- fullscreen
 
     clock_t startTime, endTime;
@@ -96,8 +78,8 @@ class ofApp : public ofBaseApp{
     void onZoomChanged_1(bool &state);
 
     void manipulateZooms(int sectionNum);
-    void ForceFalsedZoomFlags(int sectionNum);
-    void convertDisplaysZooming();
+    void forceFalsedZoomFlags(int sectionNum);
+    void checkingZoomOn();
   
     /*--- testing component variables ---*/
     ofxToggle *zoomFlags[4];

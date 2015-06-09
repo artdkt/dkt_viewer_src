@@ -19,6 +19,7 @@ public:
   int sectionNumber;
 
   void setDivision(ofPoint _leftTop, ofPoint _rightBottom);
+  void drawing(int magnitude, bool zoomOn);
   
 
 
@@ -28,6 +29,7 @@ public:
     ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
     sectionNumber = _sectionNumber;
     setDivision(_leftTop, _rightBottom);
+    mov.loadMovie(movName, decodeMode);
   }
   
 };

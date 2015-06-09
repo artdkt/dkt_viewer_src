@@ -13,6 +13,21 @@ void Section::setDivision(ofPoint _leftTop, ofPoint _rightBottom) {
   rightBottom = _rightBottom;
 }
 
+void Section::drawing(int magnitude, bool zoomOn){
+
+  if (!zoomToggle || !zoomOn) {
+    return 0;
+  }
+  if (zoomToggle) {
+    mov.draw(leftTop.x, leftTop.y, rightBottom.x, rightBottom.y);
+  }
+}
+
+
+
+
+/*deplecated*/
+
 //void Section::emitEvent(bool &val){
 //
 //  ofNotifyEvent(onZoomChanged, sectionNumber); // CHECK: counld changes the statement of zoomToggle.
