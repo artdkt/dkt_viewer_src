@@ -13,13 +13,12 @@
 class Section {
 public:
   ofQTKitPlayer mov;
-  ofPoint mov_pos, temp_mov_pos;
   ofPoint leftTop, rightBottom;
   ofxToggle zoomToggle;
   int sectionNumber;
 
   void setDivision(ofPoint _leftTop, ofPoint _rightBottom);
-  void drawing(int magnitude, bool zoomOn);
+  void drawing(int magnitude, bool zoomOn, ofPoint mov_pos);
   
 
 

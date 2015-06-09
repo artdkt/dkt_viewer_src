@@ -131,8 +131,7 @@ void ofApp::draw() {
   
     // ---------
     maskFbo.begin();
-    section_1->drawing(magnification, zoomOn);
-//    section_1->mov.draw(0, 0, 640, 360);
+    section_1->drawing(magnification, zoomOn, mov_pos);
     maskFbo.end();
     maskFbo.draw(ofGetWidth()/2-stageWidth/2,ofGetHeight()/2-stageHeight/2,stageWidth,stageHeight);
   
@@ -314,7 +313,6 @@ void ofApp::mouseReleased(int x, int y, int button){
 
     //-- drag
     if(dragMov){
-        
         temp_mov_pos = mov_pos;
         dragMov = !dragMov;
     }
