@@ -364,9 +364,12 @@ bool ofApp::checkingdoubleClicked() {
   }
 }
 
-void ofApp::manipulateZooms(int sectionNum) {
-  forceFalsedZoomFlags(sectionNum);
+void ofApp::manipulateZooms(int sectionNum, bool &state) {
   checkingZoomOn();
+  if (zoomOn && !state) {
+    return 0;
+  }
+  forceFalsedZoomFlags(sectionNum);
 }
 
 void ofApp::forceFalsedZoomFlags(int sectionNum) {
@@ -379,27 +382,27 @@ void ofApp::forceFalsedZoomFlags(int sectionNum) {
 };
 
 void ofApp::checkingZoomOn() {
-  cout << "aaa" << endl;
   for (int i = 0; i < 4; i ++) {  // TODO: kill magic number.
     if (*zoomFlags[i]) {
       zoomOn = true;
       return 0;
     }
   }
+  
   zoomOn = false;
 }
 
 /* ---------------- events function --------------------*/
 void ofApp::onZoomChanged_1(bool &state) {
-  
-  manipulateZooms(section_1->sectionNumber);
-  /* TODO: set flag of property Containers owns */
+  manipulateZooms(section_1->sectionNumber, state);
 };
 
 void ofApp::onZoomChanged_2(bool &state) {
-  
-  manipulateZooms(section_2->sectionNumber);
-  /* TODO: set flag of property Containers owns */
+  checkingZoomOn();
+  if (zoomOn && !state) {
+    return 0;
+  }
+  manipulateZooms(section_2->sectionNumber, state);
 };
 
 

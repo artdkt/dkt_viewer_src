@@ -77,7 +77,7 @@ class ofApp : public ofBaseApp{
     Section *section_1, *section_2, *section_3, *section_4;
     void onZoomChanged_1(bool &state), onZoomChanged_2(bool &state);
 
-    void manipulateZooms(int sectionNum);
+    void manipulateZooms(int sectionNum, bool &state);
     void forceFalsedZoomFlags(int sectionNum);
     void checkingZoomOn();
   
