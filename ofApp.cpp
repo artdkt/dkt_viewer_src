@@ -3,13 +3,19 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
   
-    /*--- malloc section class ---*/
-    section_1 = new Section("movies/gpA.mov", ofPoint(0,0), ofPoint(640,360), 0);
+    section_1 = new Section("movies/gpA.mov", ofPoint(0, 0), ofPoint(640, 360), 0);
+    section_2 = new Section("movies/gpB.mov", ofPoint(640, 0), ofPoint(640, 360), 1);
+    section_3 = new Section("movies/gpC.mov", ofPoint(0, 360), ofPoint(640, 360), 2);
+    section_4 = new Section("movies/gpD.mov", ofPoint(640, 360), ofPoint(640, 360), 3);
   
     zoomFlags[0] = &section_1->zoomToggle;
+    zoomFlags[1] = &section_2->zoomToggle;
+    zoomFlags[2] = &section_3->zoomToggle;
+    zoomFlags[3] = &section_4->zoomToggle;
   
     /*--- add something to click event ---*/
     section_1->zoomToggle.addListener(this, &ofApp::onZoomChanged_1);
+    section_2->zoomToggle.addListener(this, &ofApp::onZoomChanged_2);
 
   
     ofBackground(20, 20, 20);
@@ -49,6 +55,7 @@ void ofApp::setup() {
     gui.add(play.setup("play", true));
     gui.add(zoomLabel.setup("zoom", ""));
     gui.add(section_1->zoomToggle.setup("section_1", false));
+    gui.add(section_2->zoomToggle.setup("section_2", false));
     gui.add(magnification.setup("magnification", 1, 1, 12));
   
     magnification = 1;
@@ -71,6 +78,7 @@ void ofApp::update() {
     ofShowCursor();
     
     section_1->mov.update();
+    section_2->mov.update();
   
     //--------------------------
     //---- outputString
@@ -126,12 +134,12 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-  
     ofSetHexColor(0xFFFFFF);
   
     // ---------
     maskFbo.begin();
     section_1->drawing(magnification, zoomOn, mov_pos);
+    section_2->drawing(magnification, zoomOn, mov_pos);
     maskFbo.end();
     maskFbo.draw(ofGetWidth()/2-stageWidth/2,ofGetHeight()/2-stageHeight/2,stageWidth,stageHeight);
   
@@ -208,8 +216,10 @@ void ofApp::allMoviePlay(bool _bool){
   
     if (!_bool) {
         section_1->mov.stop();
+        section_2->mov.stop();
     } else {
         section_1->mov.play();
+        section_2->mov.play();
     }
   
 }
@@ -252,7 +262,7 @@ void ofApp::mouseDragged(int x, int y, int button){
     //-- zoom drag
     
     if (dragMov) {
-        
+
         transfer.x = x - beginDrag.x;
         transfer.y = y - beginDrag.y;
         
@@ -290,7 +300,6 @@ void ofApp::mousePressed(int x, int y, int button){
     // --- drag
     if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
         if (y > ofGetHeight()/2 - stageHeight/2 && ofGetHeight()/2 + stageHeight/2) {
-            
             if (zoomOn && !dragMov) {
                 // set begin point
                 
@@ -361,15 +370,17 @@ void ofApp::manipulateZooms(int sectionNum) {
 }
 
 void ofApp::forceFalsedZoomFlags(int sectionNum) {
-  for (int i = 0; i < ELEM(*zoomFlags); i ++) {
+  for (int i = 0; i < 4; i ++) {  // TODO: kill magic number.
     if (i != sectionNum) {
+//      cout << *zoomFlags[i] << endl;
       *zoomFlags[i] = false;
     }
   }
 };
 
 void ofApp::checkingZoomOn() {
-  for (int i = 0; i < ELEM(*zoomFlags); i ++) {
+  cout << "aaa" << endl;
+  for (int i = 0; i < 4; i ++) {  // TODO: kill magic number.
     if (*zoomFlags[i]) {
       zoomOn = true;
       return 0;
@@ -382,6 +393,12 @@ void ofApp::checkingZoomOn() {
 void ofApp::onZoomChanged_1(bool &state) {
   
   manipulateZooms(section_1->sectionNumber);
+  /* TODO: set flag of property Containers owns */
+};
+
+void ofApp::onZoomChanged_2(bool &state) {
+  
+  manipulateZooms(section_2->sectionNumber);
   /* TODO: set flag of property Containers owns */
 };
 

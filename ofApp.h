@@ -74,8 +74,8 @@ class ofApp : public ofBaseApp{
     string temp;
   
     /*--- testing section class ---*/
-    Section *section_1;
-    void onZoomChanged_1(bool &state);
+    Section *section_1, *section_2, *section_3, *section_4;
+    void onZoomChanged_1(bool &state), onZoomChanged_2(bool &state);
 
     void manipulateZooms(int sectionNum);
     void forceFalsedZoomFlags(int sectionNum);

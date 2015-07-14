@@ -20,7 +20,6 @@ void Section::drawing(int magnitude, bool zoomOn, ofPoint mov_pos){
   }
   
   if (zoomToggle) {
-    cout << mov_pos.x << endl;
     mov.draw(mov_pos.x, mov_pos.y, 1280 * magnitude, 720 * magnitude);
   }
 }
