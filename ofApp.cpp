@@ -246,7 +246,7 @@ void ofApp::mouseDragged(int x, int y, int button){
     // seek
     
     if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
-        if (y > ofGetHeight()/2 + stageHeight/2 +40 && y < ofGetHeight()/2 + stageHeight/2 +40 +20) {
+        if (y > ofGetHeight()/2 + stageHeight/2 +10 && y < ofGetHeight()/2 + stageHeight/2 +10 +20) {
             
             if(seek){
                 float x_pos = x - (ofGetWidth()/2-stageWidth/2);
@@ -287,7 +287,7 @@ void ofApp::mousePressed(int x, int y, int button){
   
     // seek
     if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
-      if (y > ofGetHeight()/2 + stageHeight/2 +40 && y < ofGetHeight()/2 + stageHeight/2 +40 +20) {
+      if (y > ofGetHeight()/2 + stageHeight/2 +10 && y < ofGetHeight()/2 + stageHeight/2 +10 +20) {
         play = false;
         seek = true;
         float x_pos = x - (ofGetWidth()/2-stageWidth/2);
