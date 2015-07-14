@@ -343,7 +343,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 
-
 /* ---------------- asset function --------------------*/
 
 bool ofApp::checkingdoubleClicked() {
@@ -375,7 +374,6 @@ void ofApp::manipulateZooms(int sectionNum, bool &state) {
 void ofApp::forceFalsedZoomFlags(int sectionNum) {
   for (int i = 0; i < 4; i ++) {  // TODO: kill magic number.
     if (i != sectionNum) {
-//      cout << *zoomFlags[i] << endl;
       *zoomFlags[i] = false;
     }
   }
