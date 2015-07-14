@@ -173,9 +173,8 @@ void ofApp::draw() {
     //---- SeekBar
     
     ofPushMatrix();
-    
     ofFill();
-    ofTranslate(ofGetWidth()/2 -stageWidth/2, ofGetHeight()/2 + stageHeight/2 +40);
+    ofTranslate(ofGetWidth()/2 -stageWidth/2, ofGetHeight()/2 + stageHeight/2 + 10); //ここがseekバーの位置
     
     ofSetHexColor(0x111111);
     ofRect(0, 0, stageWidth, 20);
