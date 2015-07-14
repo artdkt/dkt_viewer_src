@@ -33,7 +33,9 @@ class ofApp : public ofBaseApp{
     
     int stageWidth;
     int stageHeight;
-    
+    ofPoint area_top;
+    ofPoint area_bottom;
+  
     //----event
     
     char eventString[255];
@@ -73,16 +75,21 @@ class ofApp : public ofBaseApp{
     string timecode;
     string temp;
   
-    /*--- testing section class ---*/
+    /*--- section class ---*/
     Section *section_1, *section_2, *section_3, *section_4;
     void onZoomChanged_1(bool &state), onZoomChanged_2(bool &state);
-
+  
+    /*--- component variables ---*/
+    ofxToggle *zoomFlags[4];
+  
+  
+    /*--- assets functions ----*/
+    bool seekBarAreaIs(int x, int y);
     void manipulateZooms(int sectionNum, bool &state);
     void forceFalsedZoomFlags(int sectionNum);
     void checkingZoomOn();
-  
-    /*--- testing component variables ---*/
-    ofxToggle *zoomFlags[4];
+    
+
   
 };
 

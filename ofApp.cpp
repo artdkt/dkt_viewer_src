@@ -70,6 +70,8 @@ void ofApp::setup() {
     temp = "---";
     singleClicked = false;
   
+    area_top.set(ofGetWidth()/2-stageWidth/2, ofGetHeight()/2-stageHeight/2);
+    area_bottom.set(ofGetWidth()/2 + stageWidth/2, ofGetHeight()/2 + stageHeight/2);
 }
 
 //--------------------------------------------------------------
@@ -284,19 +286,16 @@ void ofApp::mousePressed(int x, int y, int button){
       section_1->mov.draw(x, y, 1280*magnification, 720*magnification); // kokoga umaku ittenai
     }
   
-  
     // seek
-    if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
-      if (y > ofGetHeight()/2 + stageHeight/2 +10 && y < ofGetHeight()/2 + stageHeight/2 +10 +20) {
-        play = false;
-        seek = true;
-        float x_pos = x - (ofGetWidth()/2-stageWidth/2);
-        float hoge  = x_pos / stageWidth;
-        section_1->mov.setPosition(hoge);
-      }
+    if(seekBarAreaIs(x, y)) {
+      play = false;
+      seek = true;
+      float x_pos = x - (ofGetWidth()/2-stageWidth/2);
+      float hoge  = x_pos / stageWidth;
+      section_1->mov.setPosition(hoge);
     }
-    
-    // --- drag
+  
+    // --- drag zoom系だこれ
     if (x > ofGetWidth()/2 - stageWidth/2 && x < ofGetWidth()/2 + stageWidth/2) {
         if (y > ofGetHeight()/2 - stageHeight/2 && ofGetHeight()/2 + stageHeight/2) {
             if (zoomOn && !dragMov) {
@@ -343,6 +342,14 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 
 /* ---------------- asset function --------------------*/
+bool ofApp::seekBarAreaIs(int x, int y) {
+  if (x > area_top.x && x < area_bottom.x) {
+    if (y > area_bottom.y +10 && y < area_bottom.y +10 +20) {
+      return true;
+    }
+  }
+ return false;
+}
 
 bool ofApp::checkingdoubleClicked() {
   if (singleClicked == false) {
