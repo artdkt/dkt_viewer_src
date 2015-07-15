@@ -79,7 +79,9 @@ class ofApp : public ofBaseApp{
     int loop_in_point;
     int loop_out_point;
     bool loopbar_dragging;
+    int loop;  // 0 = false and first set, 1 = looping state.
     bool loopBarAreaIs(int x, int y);
+    void updateLoopState(int in_point, int out_poinr);
   
   
     /*--- section class ---*/
