@@ -389,10 +389,8 @@ bool ofApp::loopBarAreaIs(int x, int y) {
 void ofApp::updateLoopState(int in_point, int out_point) {
   switch (loop) {
     case 0:
-
       if (loop_in_point != 0 && loop_out_point != 0) {
-        cout << loop_in_point << endl;
-        cout << out_point << endl;
+        cout << in_point << endl;
         section_1->mov.setPosition( (in_point - area_top.x) / stageWidth);
         loop = 1;
       }
@@ -402,8 +400,9 @@ void ofApp::updateLoopState(int in_point, int out_point) {
         if ( section_1->mov.getPosition() * stageWidth + area_top.x > out_point) {
           section_1->mov.setPosition( (in_point - area_top.x) / stageWidth);
         }
-      }
       return;
+      }
+
   }
   loop = 0;
 }
