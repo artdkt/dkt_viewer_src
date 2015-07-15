@@ -141,6 +141,7 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
   ofSetHexColor(0xFFFFFF);
+
   
   // ---------
   maskFbo.begin();

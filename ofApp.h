@@ -26,7 +26,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
   
-    void allMoviePlay(bool _bool);
 
     bool frameByframe;
     ofFbo maskFbo;
@@ -35,6 +34,10 @@ class ofApp : public ofBaseApp{
     int stageHeight;
     ofPoint area_top;
     ofPoint area_bottom;
+    int current_frame;  // grobal storing frame;
+  
+    void allMoviePlay(bool _bool);
+    void updateCurrentFrame();
   
     //----event
     
