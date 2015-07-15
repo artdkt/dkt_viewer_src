@@ -75,13 +75,18 @@ class ofApp : public ofBaseApp{
     string timecode;
     string temp;
   
+    /*--- loopbar variable and functions ---*/
+    int loop_in_point;
+    int loop_out_point;
+    bool loopBarAreaIs(int x, int y);
+  
+  
     /*--- section class ---*/
     Section *section_1, *section_2, *section_3, *section_4;
     void onZoomChanged_1(bool &state), onZoomChanged_2(bool &state);
   
     /*--- component variables ---*/
     ofxToggle *zoomFlags[4];
-  
   
     /*--- assets functions ----*/
     bool seekBarAreaIs(int x, int y);
