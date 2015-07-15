@@ -8,10 +8,10 @@ void ofApp::setup() {
   section_3 = new Section("movies/gpC.mov", ofPoint(0, 360), ofPoint(640, 360), 2);
   section_4 = new Section("movies/gpD.mov", ofPoint(640, 360), ofPoint(640, 360), 3);
   
-  zoomFlags[0] = &section_1->zoomToggle;
-  zoomFlags[1] = &section_2->zoomToggle;
-  zoomFlags[2] = &section_3->zoomToggle;
-  zoomFlags[3] = &section_4->zoomToggle;
+  sections[0] = section_1;
+  sections[1] = section_2;
+  sections[2] = section_3;
+  sections[3] = section_4;
   
   /*--- add something to click event ---*/
   section_1->zoomToggle.addListener(this, &ofApp::onZoomChanged_1);
@@ -437,14 +437,15 @@ void ofApp::manipulateZooms(int sectionNum, bool &state) {
 void ofApp::forceFalsedZoomFlags(int sectionNum) {
   for (int i = 0; i < 4; i ++) {  // TODO: kill magic number.
     if (i != sectionNum) {
-      *zoomFlags[i] = false;
+
+      sections[i]->zoomToggle = false;
     }
   }
 };
 
 void ofApp::checkingZoomOn() {
   for (int i = 0; i < 4; i ++) {  // TODO: kill magic number.
-    if (*zoomFlags[i]) {
+    if (sections[i]->zoomToggle) {
       zoomOn = true;
       return 0;
     }

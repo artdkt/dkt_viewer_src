@@ -89,10 +89,8 @@ class ofApp : public ofBaseApp{
   
     /*--- section class ---*/
     Section *section_1, *section_2, *section_3, *section_4;
+    Section *sections[4];
     void onZoomChanged_1(bool &state), onZoomChanged_2(bool &state);
-  
-    /*--- component variables ---*/
-    ofxToggle *zoomFlags[4];
   
     /*--- assets functions ----*/
     bool seekBarAreaIs(int x, int y);
