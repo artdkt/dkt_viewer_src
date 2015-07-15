@@ -202,9 +202,9 @@ void ofApp::draw() {
   //--------------------------
   //---- loop bar
   ofSetHexColor(0xAAAAAA);
-  ofRect(area_top.x, area_bottom.y + 2 - 100, area_bottom.x - area_top.x, 5);
+  ofRect(area_top.x, area_bottom.y + 2, area_bottom.x - area_top.x, 5);
   ofSetHexColor(0x0000FF);
-  ofRect(loop_in_point, area_bottom.y + 2 - 100, loop_out_point -loop_in_point, 5);
+  ofRect(loop_in_point, area_bottom.y + 2, loop_out_point -loop_in_point, 5);
 }
 
 //--------------------------------------------------------------
@@ -311,10 +311,10 @@ void ofApp::mousePressed(int x, int y, int button){
   
   // supporting zoom to double click
   if(zoomOn && checkingdoubleClicked()) {
-    cout << "x=" << x << ", y=" <<  y << endl;
     magnification =  magnification + 1;
-    sections[current_zoom_num]->mov.draw(x, y, 1280*magnification, 720*magnification);
-//    section_1->mov.draw(x, y, 1280*magnification, 720*magnification); // kokoga umaku ittenai
+    if(current_zoom_num > 0) {
+      sections[current_zoom_num]->mov.draw(x, y, 1280*magnification, 720*magnification);
+    }
   }
   
   // seek
@@ -407,7 +407,7 @@ bool ofApp::seekBarAreaIs(int x, int y) {
 
 bool ofApp::loopBarAreaIs(int x, int y) {
   if (x > area_top.x && x < area_bottom.x) {
-    if (y > area_bottom.y +2 - 100 && y < area_bottom.y + 2 + 5 - 100) {  // offsetゼロで矩形サイズは5で設定
+    if (y > area_bottom.y +2 && y < area_bottom.y + 2 + 5) {  // offsetゼロで矩形サイズは5で設定
       return true;
     }
   }
@@ -418,7 +418,6 @@ void ofApp::updateLoopState(int in_point, int out_point) {
   switch (loop) {
     case 0:
       if (loop_in_point != 0 && loop_out_point != 0) {
-        cout << in_point << endl;
         section_1->mov.setPosition( (in_point - area_top.x) / stageWidth);
         section_2->mov.setPosition( (in_point - area_top.x) / stageWidth);
         section_3->mov.setPosition( (in_point - area_top.x) / stageWidth);
@@ -464,15 +463,14 @@ void ofApp::manipulateZooms(int sectionNum, bool &state) {
   checkingZoomOn();
   if (zoomOn && !state) {
     return 0;
+    
   }
   forceFalsedZoomFlags(sectionNum);
-  current_zoom_num = sectionNum;
 }
 
 void ofApp::forceFalsedZoomFlags(int sectionNum) {
   for (int i = 0; i < 4; i ++) {  // TODO: kill magic number.
     if (i != sectionNum) {
-
       sections[i]->zoomToggle = false;
     }
   }
@@ -482,7 +480,10 @@ void ofApp::checkingZoomOn() {
   for (int i = 0; i < 4; i ++) {  // TODO: kill magic number.
     if (sections[i]->zoomToggle) {
       zoomOn = true;
+      current_zoom_num = i;
       return 0;
+    } else {
+      current_zoom_num = -1;
     }
   }
   
