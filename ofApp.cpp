@@ -8,6 +8,7 @@ void ofApp::setup() {
   section_3 = new Section("movies/gpC.mov", ofPoint(0, 360), ofPoint(640, 360), 2);
   section_4 = new Section("movies/gpD.mov", ofPoint(640, 360), ofPoint(640, 360), 3);
   
+  
   sections[0] = section_1;
   sections[1] = section_2;
   sections[2] = section_3;
@@ -16,6 +17,8 @@ void ofApp::setup() {
   /*--- add something to click event ---*/
   section_1->zoomToggle.addListener(this, &ofApp::onZoomChanged_1);
   section_2->zoomToggle.addListener(this, &ofApp::onZoomChanged_2);
+  section_3->zoomToggle.addListener(this, &ofApp::onZoomChanged_3);
+  section_4->zoomToggle.addListener(this, &ofApp::onZoomChanged_4);
   
   
   ofBackground(20, 20, 20);
@@ -56,6 +59,8 @@ void ofApp::setup() {
   gui.add(zoomLabel.setup("zoom", ""));
   gui.add(section_1->zoomToggle.setup("section_1", false));
   gui.add(section_2->zoomToggle.setup("section_2", false));
+  gui.add(section_3->zoomToggle.setup("section_3", false));
+  gui.add(section_4->zoomToggle.setup("section_4", false));
   gui.add(magnification.setup("magnification", 1, 1, 12));
   
   magnification = 1;
@@ -147,6 +152,8 @@ void ofApp::draw() {
   maskFbo.begin();
   section_1->drawing(magnification, zoomOn, mov_pos);
   section_2->drawing(magnification, zoomOn, mov_pos);
+  section_3->drawing(magnification, zoomOn, mov_pos);
+  section_4->drawing(magnification, zoomOn, mov_pos);
   maskFbo.end();
   maskFbo.draw(area_top.x, area_top.y, stageWidth, stageHeight);
   
@@ -229,9 +236,14 @@ void ofApp::allMoviePlay(bool _bool){
   if (!_bool) {
     section_1->mov.stop();
     section_2->mov.stop();
+    section_3->mov.stop();
+    section_4->mov.stop();
   } else {
     section_1->mov.play();
     section_2->mov.play();
+    section_3->mov.play();
+    section_4->mov.play();
+
   }
   
 }
@@ -263,6 +275,10 @@ void ofApp::mouseDragged(int x, int y, int button){
       float x_pos = x - (ofGetWidth()/2-stageWidth/2);
       float hoge  = x_pos / stageWidth;
       section_1->mov.setPosition(hoge);
+      section_2->mov.setPosition(hoge);
+      section_3->mov.setPosition(hoge);
+      section_4->mov.setPosition(hoge);
+
     }
   }
   
@@ -297,7 +313,8 @@ void ofApp::mousePressed(int x, int y, int button){
   if(zoomOn && checkingdoubleClicked()) {
     cout << "x=" << x << ", y=" <<  y << endl;
     magnification =  magnification + 1;
-    section_1->mov.draw(x, y, 1280*magnification, 720*magnification); // kokoga umaku ittenai
+    sections[current_zoom_num]->mov.draw(x, y, 1280*magnification, 720*magnification);
+//    section_1->mov.draw(x, y, 1280*magnification, 720*magnification); // kokoga umaku ittenai
   }
   
   // seek
@@ -306,7 +323,7 @@ void ofApp::mousePressed(int x, int y, int button){
     seek = true;
     float x_pos = x - area_top.x;
     float hoge  = x_pos / stageWidth;
-    section_1->mov.setPosition(hoge);
+    section_1->mov.setPosition(hoge); // 妥協
   }
   
   // --- drag zoom系だこれ
@@ -369,6 +386,16 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 
 /* ---------------- asset function --------------------*/
+
+void ofApp::updateCurrentFrame() {
+  for (int i = 0; i < 4; i++) {
+    if (sections[i]->mov.isPlaying()) {
+      current_frame = sections[i]->mov.getCurrentFrame();
+      return;
+    }
+  }
+}
+
 bool ofApp::seekBarAreaIs(int x, int y) {
   if (x > area_top.x && x < area_bottom.x) {
     if (y > area_bottom.y +10 && y < area_bottom.y +10 +20) {
@@ -393,6 +420,9 @@ void ofApp::updateLoopState(int in_point, int out_point) {
       if (loop_in_point != 0 && loop_out_point != 0) {
         cout << in_point << endl;
         section_1->mov.setPosition( (in_point - area_top.x) / stageWidth);
+        section_2->mov.setPosition( (in_point - area_top.x) / stageWidth);
+        section_3->mov.setPosition( (in_point - area_top.x) / stageWidth);
+        section_4->mov.setPosition( (in_point - area_top.x) / stageWidth);
         loop = 1;
       }
       return;
@@ -400,6 +430,10 @@ void ofApp::updateLoopState(int in_point, int out_point) {
       if (loop_in_point != 0 && loop_out_point != 0) {
         if ( section_1->mov.getPosition() * stageWidth + area_top.x > out_point) {
           section_1->mov.setPosition( (in_point - area_top.x) / stageWidth);
+          section_2->mov.setPosition( (in_point - area_top.x) / stageWidth);
+          section_3->mov.setPosition( (in_point - area_top.x) / stageWidth);
+          section_4->mov.setPosition( (in_point - area_top.x) / stageWidth);
+          
         }
       return;
       }
@@ -432,6 +466,7 @@ void ofApp::manipulateZooms(int sectionNum, bool &state) {
     return 0;
   }
   forceFalsedZoomFlags(sectionNum);
+  current_zoom_num = sectionNum;
 }
 
 void ofApp::forceFalsedZoomFlags(int sectionNum) {
@@ -460,15 +495,16 @@ void ofApp::onZoomChanged_1(bool &state) {
 };
 
 void ofApp::onZoomChanged_2(bool &state) {
-  checkingZoomOn();
-  if (zoomOn && !state) {
-    return 0;
-  }
   manipulateZooms(section_2->sectionNumber, state);
 };
 
+void ofApp::onZoomChanged_3(bool &state) {
+  manipulateZooms(section_3->sectionNumber, state);
+};
 
-
+void ofApp::onZoomChanged_4(bool &state) {
+  manipulateZooms(section_4->sectionNumber, state);
+};
 
 
 

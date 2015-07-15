@@ -90,14 +90,15 @@ class ofApp : public ofBaseApp{
     /*--- section class ---*/
     Section *section_1, *section_2, *section_3, *section_4;
     Section *sections[4];
-    void onZoomChanged_1(bool &state), onZoomChanged_2(bool &state);
+    void onZoomChanged_1(bool &state), onZoomChanged_2(bool &state), onZoomChanged_3(bool &state), onZoomChanged_4(bool &state);
   
     /*--- assets functions ----*/
     bool seekBarAreaIs(int x, int y);
     void manipulateZooms(int sectionNum, bool &state);
     void forceFalsedZoomFlags(int sectionNum);
     void checkingZoomOn();
-    
+    int  current_zoom_num;
+  
 
   
 };
