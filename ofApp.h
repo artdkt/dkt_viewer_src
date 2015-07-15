@@ -78,6 +78,7 @@ class ofApp : public ofBaseApp{
     /*--- loopbar variable and functions ---*/
     int loop_in_point;
     int loop_out_point;
+    bool loopbar_dragging;
     bool loopBarAreaIs(int x, int y);
   
   

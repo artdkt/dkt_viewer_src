@@ -193,7 +193,6 @@ void ofApp::draw() {
   ofRect(area_top.x, area_bottom.y + 2 - 100, area_bottom.x - area_top.x, 5);
   ofSetHexColor(0x0000FF);
   ofRect(loop_in_point, area_bottom.y + 2 - 100, loop_out_point -loop_in_point, 5);
-  
 }
 
 //--------------------------------------------------------------
@@ -280,9 +279,8 @@ void ofApp::mouseDragged(int x, int y, int button){
   
   // loop bar
   if (loopBarAreaIs(x, y)) {
+    loopbar_dragging = true;
     loop_out_point = x;
-    cout << "in" << loop_in_point << endl;
-    cout << "out" << loop_out_point << endl;
   }
   
 }
@@ -321,7 +319,9 @@ void ofApp::mousePressed(int x, int y, int button){
   
   // loop bar
   if (loopBarAreaIs(x, y)) {
+    loopbar_dragging = false;
     loop_in_point = x;
+    loop_out_point = x;
   }
   
 }
@@ -338,6 +338,12 @@ void ofApp::mouseReleased(int x, int y, int button){
   if(dragMov){
     temp_mov_pos = mov_pos;
     dragMov = !dragMov;
+  }
+  
+  // loop bar
+  if(!loopbar_dragging) {
+    loop_in_point = 0;
+    loop_out_point = 0;
   }
 }
 
