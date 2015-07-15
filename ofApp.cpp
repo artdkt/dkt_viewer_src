@@ -111,6 +111,24 @@ void ofApp::update() {
   //--------------------------
   //--- soundControl
   
+  if (!zoomOn) {
+    section_1->mov.setVolume(1.0);
+    section_2->mov.setVolume(0.0);
+    section_3->mov.setVolume(0.0);
+    section_4->mov.setVolume(0.0);
+    
+  } else {
+    for (int i = 0; i < 4; i ++) {
+      if (i == current_frame) {
+        sections[i]->mov.setVolume(1.0);
+      } else {
+        sections[i]->mov.setVolume(0.0);
+      }
+    }
+  }
+  
+  
+  
   //    if (movie00) {
   //        mov00.setVolume(1.0);
   //    } else {
